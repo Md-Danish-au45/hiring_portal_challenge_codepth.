@@ -72,7 +72,7 @@ const JobListingsPage = () => {
   }
   if (!loggedIn) {
     // Redirect to the login page if the user is not logged in
-    return <NavLink to="/login" />;
+    return <NavLink to="/" />;
   }
 
   return (
