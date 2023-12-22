@@ -49,8 +49,7 @@ const Login = () => {
   if (loggedIn) {
     // Redirect to /dashboard or desired page after successful login
     window.location.href = '/home';
-    // You can replace '/dashboard' with the desired URL
-    // This will simulate redirection by changing the window's location
+   
   }
 
   return (
