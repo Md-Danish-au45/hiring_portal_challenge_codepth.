@@ -37,7 +37,7 @@ const JobListingsPage = () => {
         setLoggedIn(true);
       } else {
         setLoggedIn(false);
-        window.location.href = '/login';
+        window.location.href = '/';
 
 
       }
