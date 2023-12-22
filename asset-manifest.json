@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/hiring_portal_challenge_codepth/static/css/main.f855e6bc.css",
+    "main.js": "/hiring_portal_challenge_codepth/static/js/main.895f0186.js",
+    "index.html": "/hiring_portal_challenge_codepth/index.html",
+    "main.f855e6bc.css.map": "/hiring_portal_challenge_codepth/static/css/main.f855e6bc.css.map",
+    "main.895f0186.js.map": "/hiring_portal_challenge_codepth/static/js/main.895f0186.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.895f0186.js"
+  ]
+}
