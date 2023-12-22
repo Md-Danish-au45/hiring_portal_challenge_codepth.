@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { firestore } from './firebase';
+import { firestore,auth } from './firebase';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { NavLink } from 'react-router-dom';
+
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 345,
   MozUserFocus:"select-menu",
@@ -23,7 +25,24 @@ const JobListingsPage = () => {
   const [jobListings, setJobListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+  const checkLoginStatus = () => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+        window.location.href = '/login';
+
+
+      }
+    });
+  };
   useEffect(() => {
     const fetchJobListings = async () => {
       try {
@@ -51,6 +70,10 @@ const JobListingsPage = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+  if (!loggedIn) {
+    // Redirect to the login page if the user is not logged in
+    return <NavLink to="/login" />;
+  }
 
   return (
     <div>
@@ -61,7 +84,7 @@ const JobListingsPage = () => {
      
       <div style={{ display: 'flex', flexWrap: 'wrap',justifyContent:"space-around" }}>
         {jobListings.map((listing) => (
-          <StyledCard key={listing.id}>
+          <StyledCard key={listing.id} href={`/job/${listing.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <CardMedia
               component="img"
               image={"https://media.istockphoto.com/id/506351726/photo/recruiter-advertising-for-job-vacancies-searching-candidates-to-hire.jpg?s=612x612&w=0&k=20&c=JNtjXENGX7igzXRDCaifzEcRox2FCUPzF0hptTK3dRw="} // Replace with the URL for the job image
@@ -87,7 +110,9 @@ const JobListingsPage = () => {
 
           </StyledCard>
         ))}
+
       </div>
+      
     </div>
   );
 };

@@ -11,7 +11,8 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login/>} />
         <Route path='/home' element={<JobForm/>} />
-        <Route path="/" element={<JobListingsPage/>} />    
+        <Route path="/job" element={<JobListingsPage/>} />    
+        <Route path="/job/:id" element={<JobListingsPage/>} />    
       </Routes>
       </BrowserRouter>
  

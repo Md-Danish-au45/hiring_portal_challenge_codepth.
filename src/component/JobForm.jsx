@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { firestore, auth } from './firebase'; // Assuming 'auth' is the Firebase authentication reference
 import { TextField, Button, Typography, Container, Grid } from '@mui/material';
@@ -12,7 +11,6 @@ const JobForm = () => {
   const [location, setLocation] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [notifications, setNotifications] = useState(0);
-  
 
   useEffect(() => {
     checkLoginStatus();
@@ -24,23 +22,25 @@ const JobForm = () => {
         setLoggedIn(true);
       } else {
         setLoggedIn(false);
+        window.location.href = '/login';
+
+
       }
     });
   };
 
+
   const sendNotification = () => {
-    // Implement your notification logic here
-    // Example: Trigger a browser notification or Firebase Cloud Messaging (FCM) notification
-    // For browser notification:
+    // Check if browser supports notifications and user has granted permission
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('New Job Posted', {
         body: `A new job titled "${jobTitle}" has been posted.`,
       });
     }
-    // For Firebase Cloud Messaging (FCM):
-    // Implement FCM logic to send a notification to relevant devices/users
-    // Refer to Firebase FCM documentation for implementation details
+    // For more advanced notification handling, consider using a service worker and push notifications
+    // This code demonstrates simple browser notifications
   };
+
   const handleJobSubmit = async (e) => {
     e.preventDefault();
     if (!jobTitle || !jobDescription || !contactEmail || !applicationDueDate || !location) {
@@ -63,8 +63,7 @@ const JobForm = () => {
 
         alert(`A new job titled "${jobTitle}" has been posted.`);
 
-        window.location.href = '/';
-
+        window.location.href = '/job';
       } else {
         alert('Please log in first.');
       }
@@ -72,18 +71,17 @@ const JobForm = () => {
       console.error('Error adding job:', err);
     }
   };
-  
 
   return (
-    <Container style={{display:"flex",justifyContent:"center",alignContent:"center",flexDirection:"column"}}>
-      <Typography variant="h2" gutterBottom style={{borderBottom:"Highlight"}}>
+    <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <Typography variant="h2" gutterBottom style={{ borderBottom: '1px solid Highlight' }}>
         Create Jobs
       </Typography>
       {loggedIn ? (
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <form onSubmit={handleJobSubmit}>
-              <TextField
+               <form onSubmit={handleJobSubmit}>
+             <TextField
                 fullWidth
                 label="Job Title"
                 variant="outlined"
@@ -134,10 +132,17 @@ const JobForm = () => {
               <Button type="submit" variant="contained" color="primary">
                 Create Job
               </Button>
-              <NotificationsActiveIcon style={{color:"red",fontSize:30,float:"right",marginTop:"25px"}} />
 
             </form>
           </Grid>
+          {/* <Grid item xs={12} md={6}>
+            <form onSubmit={handleJobSubmit}>
+              <Button type="submit" variant="contained" color="primary">
+                Create Job
+              </Button>
+              <NotificationsActiveIcon style={{ color: 'red', fontSize: 30, float: 'right', marginTop: '25px' }} />
+            </form>
+          </Grid> */}
         </Grid>
       ) : (
         <Typography variant="body1">
